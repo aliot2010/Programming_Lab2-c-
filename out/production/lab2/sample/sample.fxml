@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="145.0" prefWidth="600.0">
+         <children>
+            <Line endX="100.0"  AnchorPane.bottomAnchor="AnchorPane"/>
+         </children></AnchorPane>
+      <AnchorPane prefHeight="196.0" prefWidth="600.0" />
+      <AnchorPane prefHeight="145.0" prefWidth="600.0" />
+   </children>
+</VBox>

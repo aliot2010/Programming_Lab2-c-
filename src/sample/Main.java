@@ -20,17 +20,23 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private AnchorPane topAnchorPane, midAnchorPane, butAnchorPane;
+    private AnchorPane topAnchorPane, midAnchorPane, botAnchorPane;
     private RadioButton formula1, formula2;
     private RadioButton radioMemory1, radioMemory2, radioMemory3;
-    private Label labelMemory1, labelMemory2, labelMemory3;
-    private Button buttonMC, buttonMPlus;
+    private Label labelMemory1, labelMemory2, labelMemory3, result;
+    private Button buttonMC, buttonMPlus, start;
+    private TextField textFiledX, textFiledY, textFiledZ;
     private ImageView formulaView;
     private ToggleGroup groupeOfFormulaButtons, groupeOfMemoryButtons;
     private final String FORMULA_1="formula1";
     private final String FORMULA_2="formula2";
 
-    private String formulaFlag=null, memoryFlag=null;
+
+    private String formulaFlag=null;
+    private int memoryFlag=0;
+    private double memory1=0.0, memory2=0.0, memory3=0.0;
+    private final int MEMORY1=1, MEMORY2=2, MEMORY3=3;
+    private static double resultOfCalculate=0.0;
 
 
     @Override
@@ -41,20 +47,16 @@ public class Main extends Application {
         VBox primaryBox = new VBox();
         createTopAnchorPane();
         createMidAnchorPane();
+        createBotAnchorPane();
 
-
-
-
-
-        butAnchorPane = new AnchorPane();
-        butAnchorPane.setPrefSize(600, 200);
-
-        primaryBox.getChildren().addAll(topAnchorPane, midAnchorPane, butAnchorPane);
+        primaryBox.getChildren().addAll(topAnchorPane, midAnchorPane, botAnchorPane);
         primaryStage.setScene(new Scene(primaryBox, 600, 500));
         primaryStage.setResizable(false);
 
         primaryStage.show();
     }
+
+
 
     Button addRectangleButton(String name) {
         Button btn = new Button(name);
@@ -66,6 +68,67 @@ public class Main extends Application {
         btn.setPrefSize(35, 35);
         return btn;
     }
+    private void createBotAnchorPane() {
+        botAnchorPane = new AnchorPane();
+        botAnchorPane.setPrefSize(600, 200);
+        createVariablsTextFields();
+        start=addRectangleButton("Start");
+        setOnStartListener();
+
+        result = new Label("0.0");
+        //result.setPrefSize(100, 30);
+
+
+
+
+        setAnchorsToBotPane();
+        botAnchorPane.getChildren().setAll(textFiledX, textFiledY, textFiledZ, start, result);
+
+    }
+
+    private void setOnStartListener() {
+        start.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(formulaFlag.equals(FORMULA_1)){
+                    calculateFormula1();
+
+                }else if(formulaFlag.equals(FORMULA_2)){
+                    calculateFormula2();
+                }
+            }
+        });
+    }
+
+    private  void calculateFormula1() {
+        resultOfCalculate=1;
+        if(memoryFlag==MEMORY1){
+            labelMemory1.getText();
+        }
+    }
+
+    private  void calculateFormula2() {
+        resultOfCalculate=2;
+
+    }
+
+
+    private void setAnchorsToBotPane() {
+        AnchorPane.setTopAnchor(textFiledX, 20.0);
+        AnchorPane.setTopAnchor(textFiledY, 87.0);
+        AnchorPane.setBottomAnchor(textFiledZ, 20.0);
+        AnchorPane.setLeftAnchor(textFiledX, 20.0);
+        AnchorPane.setLeftAnchor(textFiledY, 20.0);
+        AnchorPane.setLeftAnchor(textFiledZ, 20.0);
+
+        AnchorPane.setLeftAnchor(start, 250.0);
+        AnchorPane.setTopAnchor(start, 87.0);
+
+        AnchorPane.setRightAnchor(result, 90.0);
+        AnchorPane.setTopAnchor(result, 87.0);
+
+    }
+
 
     void createMidAnchorPane(){
         midAnchorPane = new AnchorPane();
@@ -98,6 +161,14 @@ public class Main extends Application {
 
 
         topAnchorPane.getChildren().setAll(formula1, formula2, formulaView,line);
+    }
+    private void createVariablsTextFields() {
+        textFiledX=new TextField("0.0");
+        textFiledY=new TextField("0.0");
+        textFiledZ=new TextField("0.0");
+        textFiledX.setPrefSize(70, 20);
+        textFiledY.setPrefSize(70, 20);
+        textFiledZ.setPrefSize(70, 20);
     }
 
     void createButtonsInMidPane(){

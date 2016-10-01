@@ -19,6 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
+import static java.lang.Math.*;
+
+
 public class Main extends Application {
     private AnchorPane topAnchorPane, midAnchorPane, botAnchorPane;
     private RadioButton formula1, formula2;
@@ -32,7 +35,7 @@ public class Main extends Application {
     private final String FORMULA_2="formula2";
 
 
-    private String formulaFlag=null;
+    private String formulaFlag="formula1";
     private int memoryFlag=0;
     private double memory1=0.0, memory2=0.0, memory3=0.0;
     private final int MEMORY1=1, MEMORY2=2, MEMORY3=3;
@@ -101,15 +104,22 @@ public class Main extends Application {
     }
 
     private  void calculateFormula1() {
-        resultOfCalculate=1;
-        if(memoryFlag==MEMORY1){
-            labelMemory1.getText();
-        }
+            double x= Double.valueOf( textFiledX.getText());
+            double y= Double.valueOf( textFiledY.getText());
+            double z= Double.valueOf( textFiledY.getText());
+            resultOfCalculate=Math.sin(Math.log(y)+Math.sin(Math.PI*y*y))*
+                    Math.sqrt(Math.sqrt(pow(x, 2)+Math.sin(z)+Math.exp(Math.cos(z))));
+
+            result.setText(String.valueOf(resultOfCalculate));
     }
 
     private  void calculateFormula2() {
-        resultOfCalculate=2;
 
+        double x= Double.valueOf( textFiledX.getText());
+        double y= Double.valueOf( textFiledY.getText());
+        double z= Double.valueOf( textFiledY.getText());
+        resultOfCalculate=pow(cos(exp(x))+pow(log(1+y), 2)+sqrt(exp(cos(x))+sin(PI*z)*sin(PI*z))+sqrt(1/x)+cos(pow(y,2)), sin(z));
+        result.setText(String.valueOf(resultOfCalculate));
     }
 
 
@@ -156,6 +166,10 @@ public class Main extends Application {
         topAnchorPane.setPrefSize(600, 100);
         createFormulaRadioGroupe();
         formulaView = new ImageView();
+        Image image=new Image(getClass().getResourceAsStream("formula1.png"));
+        formulaView.setImage(image);
+        formulaView.setFitHeight(80);
+        formulaView.setFitWidth(400);
         setAnchorsToTopPane();
         Line line =new Line(0, 100, 600, 100);
 
@@ -230,8 +244,7 @@ public class Main extends Application {
         formula2.setUserData("formula2");
         formula1.setToggleGroup(groupeOfFormulaButtons);
         formula2.setToggleGroup(groupeOfFormulaButtons);
-
-
+        formula1.setSelected(true);
 
         onRadioButtonChange();
     }

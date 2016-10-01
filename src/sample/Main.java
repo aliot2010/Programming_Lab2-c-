@@ -36,7 +36,7 @@ public class Main extends Application {
 
 
     private String formulaFlag="formula1";
-    private int memoryFlag=0;
+    private int memoryFlag=1;
     private double memory1=0.0, memory2=0.0, memory3=0.0;
     private final int MEMORY1=1, MEMORY2=2, MEMORY3=3;
     private static double resultOfCalculate=0.0;
@@ -191,11 +191,30 @@ public class Main extends Application {
         buttonMC.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                if(memoryFlag==MEMORY1){
+                    labelMemory1.setText("0.0");
+                    memory1=0.0;
+                }else if(memoryFlag==MEMORY2){
+                    labelMemory2.setText("0.0");
+                    memory2=0.0;
+                }else if(memoryFlag==MEMORY3){
+                    labelMemory3.setText("0.0");
+                    memory3=0.0;
+                }
             }
         });
         buttonMPlus.setOnMouseClicked(event -> {
+            if(memoryFlag==MEMORY1){
 
+                memory1=memory1+resultOfCalculate;
+                labelMemory1.setText(String.valueOf(memory1));
+            }else if(memoryFlag==MEMORY2){
+                memory2=memory2+resultOfCalculate;
+                labelMemory2.setText(String.valueOf(memory2));
+            }else if(memoryFlag==MEMORY3){
+                memory3=memory3+resultOfCalculate;
+                labelMemory3.setText(String.valueOf(memory3));
+            }
         });
     }
     void createMemoryLabels(){
@@ -253,13 +272,13 @@ public class Main extends Application {
         radioMemory1= new RadioButton("Ячейка 1");
         radioMemory2= new RadioButton("Ячейка 2");
         radioMemory3= new RadioButton("Ячейка 3");
-        radioMemory1.setUserData("Memory1");
-        radioMemory2.setUserData("Memory2");
-        radioMemory3.setUserData("Memory3");
+        radioMemory1.setUserData(1);
+        radioMemory2.setUserData(2);
+        radioMemory3.setUserData(3);
         radioMemory1.setToggleGroup(groupeOfMemoryButtons);
         radioMemory2.setToggleGroup(groupeOfMemoryButtons);
         radioMemory3.setToggleGroup(groupeOfMemoryButtons);
-
+        radioMemory1.setSelected(true);
         onMemoryRadioGroupeChange();
 
     }
@@ -267,7 +286,7 @@ public class Main extends Application {
             groupeOfMemoryButtons.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                formulaFlag=(String)groupeOfMemoryButtons.getSelectedToggle().getUserData();
+                memoryFlag= (int) groupeOfMemoryButtons.getSelectedToggle().getUserData();
 
             }
         });
